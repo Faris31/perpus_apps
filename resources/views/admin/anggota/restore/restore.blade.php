@@ -32,7 +32,7 @@
                             <td>{{$data->email}}</td>
                             <td>
                                 <a href="{{ route('anggota.restore_r', $data->id) }}" class="btn btn-success">Restore</a>
-                                <form action=" {{ route('anggota.softdelete', $data->id) }} " method="post" onclick="return confirm('Ingin menghapus data?')"
+                                <form action=" {{ route('anggota.destroy', $data->id) }} " method="post" onclick="return confirm('Ingin menghapus data?')"
                                     class="d-inline">
                                     @csrf
                                     @method('delete')
