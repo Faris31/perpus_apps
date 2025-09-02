@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Ubah Anggota')
+@section('title', 'Ubah Lokasi')
 @section('content')
 
 <div class="row">
@@ -7,39 +7,25 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">{{ $title ?? '' }}</h3>
-                <div>
-                    @foreach ($errors->all() as $i )
-                    <ul style="background-color: red">
-                        <li>{{ $i }}</li>
-                    </ul>
-                    @endforeach
-                </div>
-                <form action=" {{ route('anggota.update', $edit->id) }} " method="post">
+                <form action=" {{ route('lokasi.update', $edit->id) }} " method="post">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="mb-3">
-                            <label for="" class="form-label">No Anggota *</label>
-                            <input type="text" class="form-control" name="nomor_anggota" placeholder="silahkan masukan nomor anggota" readonly value="{{ $edit->nomor_anggota }}">
+                            <label for="kode_lokasi" class="form-label">Kode Lokasi *</label>
+                            <input type="text" class="form-control" name="kode_lokasi"
+                                placeholder="silahkan masukan kode lokasi" value=" {{ $edit->kode_lokasi }} ">
                         </div>
 
                         <div class="mb-3">
-                            <label for="" class="form-label">NIK *</label>
-                            <input type="text" class="form-control" name="nik" placeholder="silahkan masukan nik"  value="{{ $edit->nik ?? old('nik') }}">
+                            <label for="label" class="form-label">Label *</label>
+                            <input type="text" class="form-control" name="label" placeholder="silahkan masukan kode lokasi" value=" {{ $edit->label }} ">
                         </div>
 
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Anggota *</label>
-                            <input type="text" class="form-control" name="nama_anggota" placeholder="silahkan masukan nama"  value="{{ $edit->nama_anggota ?? old('nama_anggota')  }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">No. Telp *</label>
-                            <input type="text" class="form-control" name="no_tlp" placeholder="silahkan masukan no tlp"  value="{{ $edit->no_tlp ?? old('no_tlp') }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Email *</label>
-                            <input type="email" class="form-control" name="email" placeholder="silahkan masukan email"  value="{{ $edit->email ?? old('email') }}">
+                            <label for="rak" class="form-label">Rak *</label>
+                            <input type="text" class="form-control" name="rak"
+                                placeholder="silahkan masukan nama"  value=" {{ $edit->rak }} ">
                         </div>
 
                         <div class="mb-3">
@@ -52,6 +38,5 @@
         </div>
     </div>
 </div>
-{{-- {{ route('anggota.update', $edit->id) }} --}}
 
 @endsection

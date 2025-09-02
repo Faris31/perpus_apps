@@ -22,7 +22,17 @@
           </li>
           <li>
             <a href="{{url('lokasi/index')}}">
-              <i class="bi bi-circle"></i><span>Lokasi</span>
+              <i class="bi bi-circle"></i><span>Lokasi Buku</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{url('kategori/index')}}">
+              <i class="bi bi-circle"></i><span>Kategori Buku</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{url('buku/index')}}">
+              <i class="bi bi-circle"></i><span>Buku</span>
             </a>
           </li>
           {{-- <li>

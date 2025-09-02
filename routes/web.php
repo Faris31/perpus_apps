@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LocationController;
 
 Route::get('/', function () {
@@ -35,5 +37,22 @@ Route::middleware('auth')->group(function () {
     route::get('lokasi/create', [LocationController::class, 'create'])->name('lokasi.create');
     route::post('lokasi/store', [LocationController::class, 'store'])->name('lokasi.store');
     route::get('lokasi/edit/{id}', [LocationController::class, 'edit'])->name('lokasi.edit');
-    route::delete('lokasi/destroy/{id}', [LocationController::class, 'softDelete'])->name('lokasi.softdelete');
+    route::put('lokasi/update/{id}', [LocationController::class, 'update'])->name('lokasi.update');
+    route::delete('lokasi/delete/{id}', [LocationController::class, 'destroy'])->name('lokasi.delete');
+
+    // route manage category
+    route::get('kategori/index', [CategoriesController::class, 'index'])->name('kategori.index');
+    route::get('kategori/create', [CategoriesController::class, 'create'])->name('kategori.create');
+    route::post('kategori/store', [CategoriesController::class, 'store'])->name('kategori.store');
+    route::get('kategori/edit/{id}', [CategoriesController::class, 'edit'])->name('kategori.edit');
+    route::delete('kategori/delete{id}', [CategoriesController::class, 'destroy'])->name('kategori.delete');
+    route::PUT('kategori/update{id}', [CategoriesController::class, 'update'])->name('kategori.update');
+
+    // route manage book
+    route::get('buku/index', [BookController::class, 'index'])->name('buku.index');
+    route::get('buku/create', [BookController::class, 'create'])->name('buku.create');
+    route::post('buku/store', [BookController::class, 'store'])->name('buku.store');
+    route::get('buku/edit/{id}', [BookController::class, 'edit'])->name('buku.edit');
+    route::delete('buku/delete/{id}', [BookController::class, 'destroy'])->name('buku.delete');
+    route::put('buku/update/{id}', [BookController::class, 'update'])->name('buku.update');
 });

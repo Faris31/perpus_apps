@@ -61,9 +61,9 @@
             <h1>@yield('title')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href=" ">Home</a></li>
                     <li class="breadcrumb-item">Pages</li>
-                    <li class="breadcrumb-item active">Blank</li>
+                    <li class="breadcrumb-item active">{{ $title ?? '' }}</li>
                 </ol>
             </nav>
         </div>

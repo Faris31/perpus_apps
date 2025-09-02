@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Facades\Validator;
 
 
@@ -59,7 +60,9 @@ class LocationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit = Location::find($id);
+        $title = 'Ubah Lokasi';
+        return view('admin.lokasi.edit', compact('edit', 'title'));
     }
 
     /**
@@ -67,7 +70,31 @@ class LocationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rules = ([
+            'kode_lokasi' => ['required'],
+            'label' => ['required', 'string'],
+            'rak' => ['required']
+        ]);
+        $validators = Validator::make($request->all(), $rules);
+        if ($validators->fails()) {
+            return back()->withErrors($validators)->withInput();
+        };
+
+        $data = [
+            'kode_lokasi' => $request->kode_lokasi,
+            'label' => $request->label,
+            'rak' => $request->rak
+        ];
+
+        Location::where('id', $id)->update($data);
+        // $location = Location::find($id);
+        // $location->kode_lokasi = $request->kode_lokasi;
+        // $location->label = $request->label;
+        // $location->rak = $request->rak;
+        // $location->save();
+
+
+        return redirect()->to('lokasi/index');
     }
 
     /**
@@ -75,6 +102,8 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $location = Location::find($id);
+        $location->delete();
+        return redirect()->to('lokasi/index');
     }
 }
