@@ -20,6 +20,11 @@
               <i class="bi bi-circle"></i><span>Anggota</span>
             </a>
           </li>
+          <li>
+            <a href="{{url('lokasi/index')}}">
+              <i class="bi bi-circle"></i><span>Lokasi</span>
+            </a>
+          </li>
           {{-- <li>
             <a href="{{route('categories.index')}}">
               <i class="bi bi-circle"></i><span>Kategori Kamar</span>
@@ -30,7 +35,7 @@
               <i class="bi bi-circle"></i><span>Kamar</span>
             </a>
           </li> --}}
-          <li>
+          {{-- <li>
             <a href="components-breadcrumbs.html">
               <i class="bi bi-circle"></i><span>Breadcrumbs</span>
             </a>
@@ -84,7 +89,7 @@
             <a href="components-tooltips.html">
               <i class="bi bi-circle"></i><span>Tooltips</span>
             </a>
-          </li>
+          </li> --}}
         </ul>
       </li><!-- End Components Nav -->
 
@@ -103,7 +108,7 @@
           <span>Reservation</span>
         </a>
       </li> --}}
-      <!-- End Profile Page Nav -->
+      {{-- <!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -246,7 +251,8 @@
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
-      </li><!-- End Blank Page Nav -->
+      </li>
+      <!-- End Blank Page Nav --> --}}
 
     </ul>
 
