@@ -18,7 +18,7 @@
                     @csrf
                     <div class="row">
                         <div class="mb-3">
-                            <label for="" class="form-label">No Anggota *</label>
+                            <label for="" class="form-label">Nomor Anggota *</label>
                             <input type="text" class="form-control" name="nomor_anggota"
                                 placeholder="silahkan masukan nomor anggota" readonly value="{{ $code }}">
                         </div>

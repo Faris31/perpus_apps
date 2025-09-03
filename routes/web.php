@@ -55,4 +55,9 @@ Route::middleware('auth')->group(function () {
     route::get('buku/edit/{id}', [BookController::class, 'edit'])->name('buku.edit');
     route::delete('buku/delete/{id}', [BookController::class, 'destroy'])->name('buku.delete');
     route::put('buku/update/{id}', [BookController::class, 'update'])->name('buku.update');
+
+    // route transaksi pinjam buku
+    Route::resource('transaction', App\Http\Controllers\TransactionController::class);
+    Route::get('get-buku/{id}', [App\Http\Controllers\TransactionController::class, 'getBukuByIdCategory']);
+    // Route::prefix('pengembalian');
 });

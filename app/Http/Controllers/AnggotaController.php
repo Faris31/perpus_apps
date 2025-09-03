@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
-use Nette\Utils\Validators;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Pest\Mutate\Mutators\Visibility\FunctionPublicToProtected;
 
 use function Pest\Laravel\delete;
 
@@ -47,17 +43,25 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        $rulles = ([
+        $rulles = [
             'nomor_anggota' => ['required'],
             'nik' => ['required', 'numeric'],
             'nama_anggota' => ['required'],
             'no_tlp' => ['required', 'unique:members'],
             'email' => ['required', 'unique:members']
-        ]);
+        ];
         $validators = Validator::make($request->all(), $rulles);
         if ($validators->fails()) {
             return back()->withErrors($validators)->withInput();
         };
+
+        Member::create([
+            'nomor_anggota' => $request->nomor_anggota,
+            'nik' => $request->nik,
+            'nama_anggota' => $request->nama_anggota,
+            'no_tlp' => $request->no_tlp,
+            'email' => $request->email
+        ]);
         return redirect()->to('anggota/index');
     }
 
