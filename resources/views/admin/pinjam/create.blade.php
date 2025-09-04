@@ -5,7 +5,7 @@
         <div class="card-body">
             <h3 class="card-title">{{ $title ?? '' }}</h3>
 
-            <form action="" method="POST">
+            <form action="{{ route('transaction.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-sm-6">
@@ -55,6 +55,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class=" mb-3 row">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Tanggal Pengembalian</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="date" class="form-control" name="return_date">
+                            </div>
+                        </div>
+                        <div class=" mb-3 row">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Catatan</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <textarea name="note" id="note" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-12 mt-5">
                         <div class="mb-3" align='right'>
                             <button type="button" id='addRow' class="btn btn-sm btn-primary">
@@ -70,6 +88,7 @@
                             </thead>
                             <tbody class="text-center"></tbody>
                         </table>
+                        <button class="mt-3 btn btn-success">Simpan</button>
                     </div>
                 </div>
             </form>

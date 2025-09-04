@@ -22,20 +22,26 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($borrows as $index => $borrow)
                         <tr class="text-center flex-wrap align-content-center">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $index +=1 }}</td>
+                            <td>{{ $borrow->trans_number }}</td>
+                            <td>{{ $borrow->member->nama_anggota }}</td>
+                            <td>{{ \Carbon\Carbon::parse($borrow->return_date)->format('d-M-Y') }}</td>
                             <td width='100px'>
-                                <a href="" class="btn btn-success btn-sm">
-                                    <i class="bi bi-pencil"></i>
+                                <a href="{{ route('transaction.show', $borrow->id) }}" class="btn btn-success btn-sm">
+                                    <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <form action="{{ route('transaction.destroy', $borrow->id) }}" onclick="return confirm('Ingin menghapus data?')"
+                                    class="d-inline">
+                                    @method('DELETE')
+                                    <a href="{{ route('transaction.destroy', $borrow->id) }}" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </form>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

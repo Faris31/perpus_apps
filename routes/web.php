@@ -59,5 +59,6 @@ Route::middleware('auth')->group(function () {
     // route transaksi pinjam buku
     Route::resource('transaction', App\Http\Controllers\TransactionController::class);
     Route::get('get-buku/{id}', [App\Http\Controllers\TransactionController::class, 'getBukuByIdCategory']);
+    Route::get('print-peminjam/{id}', [\App\Http\Controllers\TransactionController::class, 'print']);
     // Route::prefix('pengembalian');
 });

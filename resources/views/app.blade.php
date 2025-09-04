@@ -141,10 +141,19 @@
             const tr = document.createElement('tr');
             tr.innerHTML = 
             `<td>${no}</td>
-            <td>${NameBook}</td>
-            <td><button class='btn btn-sm btn-danger'>Hapus</button></td>`;
+            <td>${NameBook}<input type='hidden' name='id_buku[]' value=${idBook}></td>
+            <td><button type='button' class='btn btn-sm btn-danger delete-row'>Hapus</button></td>`;
+            console.log(tr)
 
             tbody.appendChild(tr);
+        });
+
+        // DOM (data, objec, modelin)
+
+        document.querySelector('#tableTrans tbody').addEventListener('click', function(e){
+            if(e.target.classList.contains('delete-row')){
+                e.target.closest('tr').remove();
+            }
         });
 
         // pilih buku yang di pilih

@@ -7,7 +7,9 @@ use App\Models\Member;
 use App\Models\Borrows;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use App\Models\DetailBorrows;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -17,7 +19,8 @@ class TransactionController extends Controller
     public function index()
     {
         $title = 'Peminjaman Buku';
-        return view('admin.pinjam.index', compact('title'));
+        $borrows = Borrows::with('member', 'detailBorrow')->orderBy('id', 'desc')->get();
+        return view('admin.pinjam.index', compact('title', 'borrows'));
     }
 
     /**
@@ -45,9 +48,10 @@ class TransactionController extends Controller
         $categories = Categorie::get();
         // $books = Book::get();
         $rules = [
-            `id_anggota` => ['required'],
-            `trans_number`,
-            `return_date`
+            'id_anggota' => ['required'],
+            'trans_number',
+            'return_date',
+            'note'
         ];
         return view('admin.pinjam.create', compact('title', 'members', 'categories', 'trans_number'));
     }
@@ -57,7 +61,28 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-       //
+        DB::beginTransaction();
+        try {
+            $insertBorrow = Borrows::create([
+                'id_anggota' => $request->id_anggota,
+                'trans_number' => $request->trans_number,
+                'return_date' => $request->return_date,
+                'note' => $request->note,
+            ]);
+
+            foreach ($request->id_buku as $key => $value) {
+                DetailBorrows::create([
+                    'id_borrow' => $insertBorrow->id,
+                    'id_book' => $request->id_buku[$key],
+                ]);
+            };
+
+            DB::commit();
+            return redirect()->to('print-peminjam', $insertBorrow->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+        return view('admin.pinjam.index');
     }
 
     /**
@@ -65,7 +90,9 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $title = 'Detail Peminjaman';
+        $borrow = Borrows::with('detailBorrow.book', 'member')->find($id);
+        return view('admin.pinjam.show', compact('borrow', 'title'));
     }
 
     /**
@@ -89,7 +116,9 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $borrows = Borrows::withTrashed($id)->find($id);
+        $borrows->forceDelete();
+        return redirect()->to('transaction.index');
     }
 
     public function getBukuByIdCategory($id_category)
@@ -100,5 +129,11 @@ class TransactionController extends Controller
     } catch (\Throwable $th) {
         return response()->json(['status'=>'erros', 'message'=>$th->getMessage()], 500);
     }
+    }
+
+    public function print($id_borrow)
+    {
+        $borrow = Borrows::with('member', 'detailBorrow.book')->find($id_borrow);
+        return view('admin.pinjam.print', compact('borrow'));
     }
 }
