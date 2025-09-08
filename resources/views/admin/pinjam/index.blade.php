@@ -18,6 +18,9 @@
                             <th>Nomor Peminjaman</th>
                             <th>Anggota</th>
                             <th>Tanggal Kembali</th>
+                            <th>Aktual Tanggal Kembali</th>
+                            <th>Status</th>
+                            <th>Denda</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -28,17 +31,27 @@
                             <td>{{ $borrow->trans_number }}</td>
                             <td>{{ $borrow->member->nama_anggota }}</td>
                             <td>{{ \Carbon\Carbon::parse($borrow->return_date)->format('d-M-Y') }}</td>
-                            <td width='100px'>
+                            <td>{{ \Carbon\Carbon::parse($borrow->actual_return_date)->format('d-M-Y') }}</td>
+                            <td>{{ $borrow->status == 1 ? 'Dipinjam' : 'Sudah dikembalikan' }}</td>
+                            <td>{{ number_format($borrow->fine) }}</td>
+                            <td width='250px'>
                                 <a href="{{ route('transaction.show', $borrow->id) }}" class="btn btn-success btn-sm">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <form action="{{ route('transaction.destroy', $borrow->id) }}" onclick="return confirm('Ingin menghapus data?')"
+                                <form action="{{ route('transaction.destroy', $borrow->id) }}" method="post" onclick="return confirm('Ingin menghapus data?')"
                                     class="d-inline">
                                     @method('DELETE')
-                                    <a href="{{ route('transaction.destroy', $borrow->id) }}" class="btn btn-danger btn-sm">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="bi bi-trash"></i>
-                                    </a>
+                                    </button>
                                 </form>
+                                @if ($borrow->status == 1)                                    
+                                <form action="{{ route('transaction.return', $borrow->id) }}" method="post" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-warning">Kembalikan</button>
+                                </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

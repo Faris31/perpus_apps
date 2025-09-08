@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Borrows extends Model
 {
@@ -13,6 +14,10 @@ class Borrows extends Model
         'note',
         'status',
     ];
+
+    use SoftDeletes;
+
+    protected $date = ['deleted_at'];
 
     public function detailBorrow()
     {
