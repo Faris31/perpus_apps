@@ -11,6 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $title = 'Dashboard';
         $totalBook = Book::count();
         $totalStock = Book::sum('stok_buku');
 
@@ -27,6 +28,6 @@ class HomeController extends Controller
 
         $fines = Borrows::with('member')->where('fine', '>', 0)->get();
         $totalFine = Borrows::sum('fine');
-        return view('admin.dashboard', compact('totalBook', 'totalStock', 'diPinjam', 'returnBooks', 'notReturnBooks', 'fines', 'totalFine'));
+        return view('admin.dashboard', compact('title', 'totalBook', 'totalStock', 'diPinjam', 'returnBooks', 'notReturnBooks', 'fines', 'totalFine'));
     }
 }

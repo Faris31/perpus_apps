@@ -145,6 +145,7 @@
         </div>
         <div class="mt-3">
           <table class="table table-bordered text-center">
+            <h2 class="card-title ms-2">Total Denda</h2>
             <thead>
               <tr>
                 <th>No Transaksi</th>

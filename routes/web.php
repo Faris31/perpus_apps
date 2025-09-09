@@ -62,4 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('print-peminjam/{id}', [\App\Http\Controllers\TransactionController::class, 'print'])->name('print-peminjam');
     Route::post('transaction/{id}/return', [\App\Http\Controllers\TransactionController::class, 'returnBook'])->name('transaction.return');
     // Route::prefix('pengembalian');
+
+    //role manajement
+    Route::resource('role', App\Http\Controllers\RoleController::class);
 });
