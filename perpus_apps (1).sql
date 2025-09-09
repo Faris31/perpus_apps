@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2025 at 04:20 AM
+-- Generation Time: Sep 09, 2025 at 04:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -283,7 +283,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2025_09_08_014511_add_soft_delete_to_borrow_and_detail_borrow', 8),
 (14, '2025_09_08_024534_add_status_to_table_borrows', 9),
 (15, '2025_09_08_025855_add_return_coloms_to_borrows_table', 10),
-(16, '2025_09_09_012535_create_roles_table', 11);
+(16, '2025_09_09_012535_create_roles_table', 11),
+(17, '2025_09_09_022212_create_user_roles_table', 12);
 
 -- --------------------------------------------------------
 
@@ -365,6 +366,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (4, 'Admin', 'admin@gmail.com', NULL, '$2y$12$9MjhYCGNgWL4l3pywgPGwu6uWaPubl0w31jaAbfZbCqrhY098YeBy', NULL, '2025-08-31 20:27:37', '2025-08-31 20:27:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE `user_roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_user` bigint(20) UNSIGNED NOT NULL,
+  `id_role` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -478,6 +493,14 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_roles_id_user_foreign` (`id_user`),
+  ADD KEY `user_roles_id_role_foreign` (`id_role`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -533,7 +556,7 @@ ALTER TABLE `members`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -546,6 +569,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -570,6 +599,13 @@ ALTER TABLE `borrows`
 ALTER TABLE `detail_borrows`
   ADD CONSTRAINT `detail_borrows_id_book_foreign` FOREIGN KEY (`id_book`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_borrows_id_borrow_foreign` FOREIGN KEY (`id_borrow`) REFERENCES `borrows` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD CONSTRAINT `user_roles_id_role_foreign` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_roles_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

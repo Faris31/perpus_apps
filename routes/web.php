@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
     route::put('buku/update/{id}', [BookController::class, 'update'])->name('buku.update');
 
     // route transaksi pinjam buku
-    Route::resource('transaction', App\Http\Controllers\TransactionController::class);
+    Route::resource('transaction', App\Http\Controllers\TransactionController::class)->middleware('role:User');
     Route::get('get-buku/{id}', [App\Http\Controllers\TransactionController::class, 'getBukuByIdCategory']);
     Route::get('print-peminjam/{id}', [\App\Http\Controllers\TransactionController::class, 'print'])->name('print-peminjam');
     Route::post('transaction/{id}/return', [\App\Http\Controllers\TransactionController::class, 'returnBook'])->name('transaction.return');
@@ -65,4 +65,11 @@ Route::middleware('auth')->group(function () {
 
     //role manajement
     Route::resource('role', App\Http\Controllers\RoleController::class);
+
+    // user management
+    Route::resource('user', App\Http\Controllers\UserController::class);
+
+    // add_role management
+    Route::get('user/{id}/roles', [App\Http\Controllers\UserController::class, 'editRole'])->name('user.roles');
+    Route::post('user/{id}/updateRoles', [App\Http\Controllers\UserController::class, 'updateRoles'])->name('user.updateRoles');
 });
