@@ -18,12 +18,12 @@ class RoleMiddleware
     // varidic parameter
     public function handle(Request $request, Closure $next, ...$role): Response
     {
-        if(!$request->user() || $request->user()->hasAnyRole($role))
+        if (!$request->user() || !$request->user()->hasAnyRole($role))
         {
+            Alert::error('Uppsss', 'Anda tidak memiliki akses ke halaman ini');
             return redirect()->to('dashboard');
         }
 
-        Alert::error('Uppsss', 'Anda tidak memiliki akses ke halaman ini');
         return $next($request);
     }
 }
